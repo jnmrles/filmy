@@ -1,6 +1,6 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Actors, MovieInformation,Movies,NavBar,Profile } from './';
 import useStyles from './styles';
 
