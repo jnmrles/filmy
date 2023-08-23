@@ -7,7 +7,6 @@ import {
   Grid,
   Box,
   CircularProgress,
-  useMediaQuery,
   Rating,
 } from "@mui/material";
 import {
@@ -66,36 +65,44 @@ const MovieInformation = () => {
   },[watchlistMovies,data])
 
   const addToFavorites = async () => {
-    await axios.post(
-        `https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${
-            process.env.REACT_APP_TMDB_KEY
-        }&session_id=${localStorage.getItem("session_id")}`,
-        {
-            media_type: "movie",
-            media_id: id,
-            favorite: !isMovieFavorited,
-        }
-    );
+    try{
+      await axios.post(
+          `https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${
+              process.env.REACT_APP_TMDB_KEY
+          }&session_id=${localStorage.getItem("session_id")}`,
+          {
+              media_type: "movie",
+              media_id: id,
+              favorite: !isMovieFavorited,
+          }
+      );
 
-    setIsMovieFavorited((prev) => !prev);
+      setIsMovieFavorited((prev) => !prev);
+    } catch (error) {
+    console.error("An error occurred while adding to favorites:", error);
+    }
   };
 
   const addToWatchlist = async () => {
-    await axios.post(
-        `https://api.themoviedb.org/3/account/${
-            user.id
-        }/watchlist?api_key=${
-            process.env.REACT_APP_TMDB_KEY
-        }&session_id=${localStorage.getItem("session_id")}`,
-        {
-            media_type: "movie",
-            media_id: id,
-            watchlist: !isMovieWatchlisted,
-        }
-    );
+    try{
+      await axios.post(
+          `https://api.themoviedb.org/3/account/${
+              user.id
+          }/watchlist?api_key=${
+              process.env.REACT_APP_TMDB_KEY
+          }&session_id=${localStorage.getItem("session_id")}`,
+          {
+              media_type: "movie",
+              media_id: id,
+              watchlist: !isMovieWatchlisted,
+          }
+      );
 
-    setIsMovieWatchlisted((prev) => !prev);
-  };
+      setIsMovieWatchlisted((prev) => !prev);
+    } catch (error) {
+    console.error("An error occurred while adding to Watchlist:", error);
+    }
+};
 
 
   if (isFetching) {
